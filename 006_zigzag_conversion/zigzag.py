@@ -1,20 +1,34 @@
-from collections import defaultdict
-class Solution:
-    # @param {string} s
-    # @param {integer} numRows
-    # @return {string}
-    def convert(self, s, numRows):
-        if numRows==1:
-            return s
-        lines = defaultdict(str)
-        down = True
-        for i,c in enumerate(s):
-            rem = i%(numRows+numRows-2)
-            if rem < numRows:
-                lines[rem]+=c
-            else:
-                lineno = numRows*2-2-rem
-                lines[lineno] += c
-        ss="".join([lines[i] for i in range(numRows)])
-        
-        return ss
+def convert(s: str, numRows: int) -> str:
+    if numRows == 1 or numRows >= len(s):
+        return s
+    
+ 
+    rows = [''] * numRows
+    current_row = 0
+    going_down = False
+    
+  
+    for char in s:
+        rows[current_row] += char
+
+        if current_row == 0 or current_row == numRows - 1:
+            going_down = not going_down
+        current_row += 1 if going_down else -1
+    
+
+    return ''.join(rows)
+
+
+s1 = "PAYPALISHIRING"
+numRows1 = 3
+print(convert(s1, numRows1))  
+
+s2 = "PAYPALISHIRING"
+numRows2 = 4
+print(convert(s2, numRows2)) 
+
+s3 = "A"
+numRows3 = 1
+print(convert(s3, numRows3))  
+
+
